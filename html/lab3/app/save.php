@@ -1,6 +1,7 @@
 <?php
 
 require_once "./../validation/registrationValidation.php";
+require_once "./../handlers/addUserHandler.php";
 
 // Validate Post Data
 
@@ -27,7 +28,16 @@ if (!empty($formErrors)) {
     exit;
 }
 else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_POST['username']) || !isset($_POST['password'])) {
+        die("Username or Password is missing!");
+    }
 
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    if (empty($username) || empty($password)) {
+        die("Username or Password is empty!");
+    }
     $selectedSkills = "No skills selected.";
 
     // Join the skills into a single string
@@ -44,6 +54,9 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = $_POST['address'] ?? 'N/A';
     $department = $_POST['department'] ?? 'N/A';
     $gender=$_POST['gender'];
+    $username= $_POST['username'] ??'N/A';
+    $password= $_POST['password'] ??'N/A';
+    $email = $_POST['email'] ??'N/A';
 
     // Create JSON object for the data
     $userData = [
@@ -53,10 +66,13 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST") {
         "address" => $address,
         "department" => $department,
         "gender" => $gender,
-        "skills" => $selectedSkills
+        "skills" => $selectedSkills,
+        "username" =>$username,
+        "password"=> $password,
+        "email"=> $email,
     ];
     
-    $fileName = "data.json";
+    $fileName = "./../users.json";
 
     // Add the data to the json file
 

@@ -196,7 +196,11 @@ if(isset($_GET["currently_valid_data"])){
             <input type="text" id="username" name="username"  <?= (isset($currently_valid_data["username"])) ? $currently_valid_data["username"] : ""?>>
             <div class="error"><?= $errors["username"] ?? '' ?></div>
         </div>
-
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email"  <?= (isset($currently_valid_data["email"])) ? $currently_valid_data["email"] : ""?>>
+            <div class="error"><?= $errors["email"] ?? '' ?></div>
+        </div>
         <div class="form-group">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" <?= (isset($currently_valid_data["password"])) ? $currently_valid_data["password"] : ""?>>

@@ -14,7 +14,23 @@ function ValidatePostData($postData){
             // Add the error message to the errors' array
             $errors[$key] = ucfirst("{$key} is required");
             
+        } else if (!empty($value)){
+            if($key === "email")
+            // /^[a-z0-9_]{8}$/
+        {
 
+            if(! preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $value)){
+                $errors[$key] = ucfirst("Invalid {$key}");
+
+        }
+
+            }else if ($key === "password"){
+                if(! preg_match('/^[a-z0-9_]{8}$/', $value)){
+                    $errors[$key] = ucfirst("Invalid {$key}");
+    
+            }
+        
+            }
         }else{
 
             // Add the valid data to the array to return to the user

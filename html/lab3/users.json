@@ -1,0 +1,39 @@
+[
+    {
+        "fname": "nnnn",
+        "lname": "nnnn",
+        "address": "nnnnn",
+        "department": "OpenSource",
+        "gender": "female",
+        "skills": "mysql, j2se, postgresql"
+    },
+    {
+        "fname": "nnnn",
+        "lname": "mmmm",
+        "address": "mmmm",
+        "department": "OpenSource",
+        "gender": "female",
+        "skills": "mysql"
+    },
+    {
+        "fname": "John",
+        "lname": "Doe",
+        "address": "Sesame Street",
+        "department": "OpenSource",
+        "gender": "male",
+        "skills": "php",
+        "username": "ekhalifa",
+        "password": "1234"
+    },
+    {
+        "fname": "Falola",
+        "lname": "bb",
+        "address": "bb",
+        "department": "OpenSource",
+        "gender": "female",
+        "skills": "mysql",
+        "username": "MWael",
+        "password": "ss",
+        "email": "ss"
+    }
+]
