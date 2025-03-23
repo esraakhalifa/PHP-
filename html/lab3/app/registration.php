@@ -4,215 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form by Esraa Khalifa</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f2f5;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        flex-direction: column;
-    }
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
 
-    .container {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+        .form-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
 
-    .container h1 {
-        font-size: 36px;
-        color: #1877f2;
-        font-weight: bold;
-    }
+        .form-container h1 {
+            font-size: 28px;
+            color: #1877f2;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
 
-    .container p {
-        font-size: 18px;
-        color: #606770;
-    }
+        .form-container p {
+            font-size: 16px;
+            color: #606770;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-    .form-container {
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        width: 80vw;
-        max-width: 430px;
-        text-align: center;
-    }
+        .error {
+            color: #dc3545;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
 
-    .form-group {
-        margin-bottom: 10px;
-        text-align: left;
-    }
+        .btn-container {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+        }
 
-    label {
-        font-size: 14px;
-        font-weight: bold;
-        color: #606770;
-        margin-bottom: 5px;
-        display: block;
-    }
+        .submit-btn {
+            background-color: #1877f2;
+            color: white;
+            border: none;
+        }
 
-    input, select, textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccd0d5;
-        border-radius: 5px;
-        font-size: 16px;
-    }
+        .submit-btn:hover {
+            background-color: lightblue;
+        }
 
-    .error {
-        color: red;
-        font-size: 14px;
-        font-weight: bold;
-        margin-top: 5px;
-    }
+        .reset-btn {
+            background-color: #e4e6eb;
+            color: #000;
+            border: none;
+        }
 
-    .gender-group, .skills-group {
-        display: flex;
-        gap: 10px;
-    }
-
-    .gender-group input, .skills-group input {
-        width: auto;
-    }
-
-    .btn-container {
-        margin-top: 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    button {
-        padding: 12px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .submit-btn {
-        background-color: #42b72a;
-        color: white;
-    }
-
-    .reset-btn {
-        background-color: #e4e6eb;
-        color: black;
-    }
-
-    .submit-btn:hover {
-        background-color: #36a420;
-    }
-
-    .reset-btn:hover {
-        background-color: #d8dadf;
-    }
+        .reset-btn:hover {
+            background-color: #d8dadf;
+        }
     </style>
 </head>
 <body>
+    <?php
+        $currently_valid_data = $_POST ?? [];
+        $errors = [];
+        if (isset($_GET["errors"])) {
+            $errors = $_GET["errors"];
+            echo "<br>";
+            $errors = json_decode($errors, true);
+        }
 
-<?php
-    $currently_valid_data = $_POST ?? [];
-    $errors = [];
-
-
-
-if(isset($_GET["errors"])){
-    $errors = $_GET["errors"];
-    echo "<br>";
-
-    $errors = json_decode($errors, true);
-}
-
-if(isset($_GET["currently_valid_data"])){
-    $currently_valid_data=$_GET["currently_valid_data"];
-    $currently_valid_data = json_decode($currently_valid_data, true);
-}
-
-
-
-?>
-
-<div class="form-container">
-    <form method="POST" action="save.php">
-        <div class="form-group">
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" name="fname" value="<?= htmlspecialchars($currently_valid_data['fname'] ?? '') ?>" >
-            <div class="error"><?= $errors["fname"] ?? '' ?></div>
-        </div>
-
-        <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="lname" value="<?= htmlspecialchars($currently_valid_data['lname'] ?? '') ?>">
-            <div class="error"><?= $errors["lname"] ?? '' ?></div>
-        </div>
-
-        <div class="form-group">
-            <label for="address">Address</label>
-            <textarea id="address" name="address"><?= htmlspecialchars($currently_valid_data["address"] ?? '') ?></textarea>
-            <div class="error"><?= $errors["address"] ?? '' ?></div>
-        </div>
-
-        <div class="form-group">
-            <label for="country">Country</label>
-            <select id="country" name="country">
-                <option>Select Country</option>
-                <option <?= (isset($currently_valid_data["country"]) && $currently_valid_data["country"] === "USA") ? "selected" : "" ?>>USA</option>
-                <option <?= (isset($currently_valid_data["country"]) && $currently_valid_data["country"] === "UK") ? "selected" : "" ?>>UK</option>
-                <option <?= (isset($currently_valid_data["country"]) && $currently_valid_data["country"] === "Egypt") ? "selected" : "" ?>>Egypt</option>
-            </select>
-            <div class="error"><?= $errors["country"] ?? '' ?></div>
-        </div>
-
-        <div class="form-group">
-            <label>Gender</label>
-            <div class="gender-group">
-                <input type="radio" name="gender" value="male" <?= (isset($currently_valid_data["gender"]) && $currently_valid_data["gender"] === "male") ? "checked" : "" ?>> Male
-                <input type="radio" name="gender" value="female" <?= (isset($currently_valid_data["gender"]) && $currently_valid_data["gender"] === "female") ? "checked" : "" ?>> Female
+        if (isset($_GET["currently_valid_data"])) {
+            $currently_valid_data = $_GET["currently_valid_data"];
+            $currently_valid_data = json_decode($currently_valid_data, true);
+        }
+        if (isset($_GET["status"])) {
+            $status = $_GET["status"];
+        }
+    ?>
+    <div class="form-container">
+        <h1>Registration Form</h1>
+        <p>Please fill out the form below to register.</p>
+        <form method="POST" action="save.php" enctype="multipart/form-data">
+            <!-- First Name -->
+            <div class="mb-3">
+                <label for="fname" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="fname" name="fname" value="<?= htmlspecialchars($currently_valid_data['fname'] ?? '') ?>">
+                <div class="error"><?= $errors["fname"] ?? '' ?></div>
             </div>
-            <div class="error"><?= $errors["gender"] ?? '' ?></div>
-        </div>
 
-        <div class="form-group">
-            <label>Skills</label>
-            <div class="skills-group">
-                <input type="checkbox" name="skills[]" value="php" <?(isset($currently_valid_data["skills"]) and in_array("php", $currently_valid_data["skills"])) ? 'checked' : '';?>>PHP
-                <input type="checkbox" name="skills[]" value="mysql" <?(isset($currently_valid_data["skills"])and in_array("mysql", $currently_valid_data["skills"]) )? 'checked' : '';?>> MySQL
-                <input type="checkbox" name="skills[]" value="j2se" <?( isset($currently_valid_data["skills"]) and in_array("j2se", $currently_valid_data["skills"])) ? 'checked' : '';?>> J2SE
-                <input type="checkbox" name="skills[]" value="postgresql" <?(isset($currently_valid_data["skills"]) and in_array("postgresql", $currently_valid_data["skills"])) ? 'checked' : '';?>> PostgreSQL                    
+            <!-- Last Name -->
+            <div class="mb-3">
+                <label for="lname" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lname" name="lname" value="<?= htmlspecialchars($currently_valid_data['lname'] ?? '') ?>">
+                <div class="error"><?= $errors["lname"] ?? '' ?></div>
             </div>
-            <div class="error"><?= $errors["skills"] ?? '' ?></div>
-        </div>
-        <div class="form-group">
-                <label for="department">Department</label>
-                <input type="text" id="department" name="department" value="OpenSource" readonly>
+
+            <!-- Address -->
+            <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" name="address"><?= htmlspecialchars($currently_valid_data["address"] ?? '') ?></textarea>
+                <div class="error"><?= $errors["address"] ?? '' ?></div>
             </div>
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"  <?= (isset($currently_valid_data["username"])) ? $currently_valid_data["username"] : ""?>>
-            <div class="error"><?= $errors["username"] ?? '' ?></div>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" id="email" name="email"  <?= (isset($currently_valid_data["email"])) ? $currently_valid_data["email"] : ""?>>
-            <div class="error"><?= $errors["email"] ?? '' ?></div>
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" <?= (isset($currently_valid_data["password"])) ? $currently_valid_data["password"] : ""?>>
-            <div class="error"><?= $errors["password"] ?? '' ?></div>
-        </div>
 
-        <div class="btn-container">
-            <button type="submit" class="submit-btn">Submit</button>
-            <button type="reset" class="reset-btn">Reset</button>
-        </div>
-    </form>
-</div>
+            <!-- Country -->
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <select class="form-select" id="country" name="country">
+                    <option value="">Select Country</option>
+                    <?php
+                    $countries = ["USA", "UK", "Egypt"];
+                    foreach ($countries as $country) {
+                        $selected = (isset($currently_valid_data["country"]) && $currently_valid_data["country"] === $country) ? "selected" : "";
+                        echo "<option value=\"$country\" $selected>$country</option>";
+                    }
+                    ?>
+                </select>
+                <div class="error"><?= $errors["country"] ?? '' ?></div>
+            </div>
 
+            <!-- Gender -->
+            <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <div class="d-flex gap-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" value="male" <?= (isset($currently_valid_data["gender"]) && $currently_valid_data["gender"] === "male") ? "checked" : "" ?>>
+                        <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" value="female" <?= (isset($currently_valid_data["gender"]) && $currently_valid_data["gender"] === "female") ? "checked" : "" ?>>
+                        <label class="form-check-label">Female</label>
+                    </div>
+                </div>
+                <div class="error"><?= $errors["gender"] ?? '' ?></div>
+            </div>
+
+            <!-- Skills -->
+            <div class="mb-3">
+                <label class="form-label">Skills</label>
+                <div class="d-flex gap-3 flex-wrap">
+                    <?php
+                    $skills = ["php", "mysql", "j2se", "postgresql"];
+                    foreach ($skills as $skill) {
+                        $checked = (isset($currently_valid_data["skills"]) && in_array($skill, $currently_valid_data["skills"])) ? "checked" : "";
+                        echo "<div class=\"form-check\">
+                                <input class=\"form-check-input\" type=\"checkbox\" name=\"skills[]\" value=\"$skill\" $checked>
+                                <label class=\"form-check-label\">" . ucfirst($skill) . "</label>
+                              </div>";
+                    }
+                    ?>
+                </div>
+                <div class="error"><?= $errors["skills"] ?? '' ?></div>
+            </div>
+
+            <!-- Department (Read-Only) -->
+            <div class="mb-3">
+                <label for="department" class="form-label">Department</label>
+                <input type="text" class="form-control" id="department" name="department" value="OpenSource" readonly>
+            </div>
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" value="<?= htmlspecialchars($currently_valid_data["username"] ?? '') ?>">
+                <div class="error"><?= $errors["username"] ?? '' ?></div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($currently_valid_data["email"] ?? '') ?>">
+                <div class="error"><?= $errors["email"] ?? '' ?></div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
+                <div class="error"><?= $errors["password"] ?? '' ?></div>
+            </div>
+
+            <!-- Image Upload -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Upload an Image</label>
+                <input type="file" class="form-control" id="image" name="image">
+                <div class="error"><?= $errors["image"] ?? '' ?></div>
+            </div>
+
+            <!-- Status Messages -->
+            <?php if (isset($_GET['status']) && ($_GET['status'] == 'success' || $_GET['status'] == 'error')): ?>
+                <div class="alert <?= ($_GET['status'] == 'success') ? 'alert-success' : 'alert-danger' ?>">
+                    <?= ($_GET['status'] == 'success') ? '✅ Image uploaded successfully!' : '⚠️ Error uploading image. Please try again.' ?>
+                </div>
+            <?php endif; ?>
+
+            <!-- Submit & Reset Buttons -->
+            <div class="btn-container">
+                <button type="submit" class="btn submit-btn">Submit</button>
+                <button type="reset" class="btn reset-btn">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

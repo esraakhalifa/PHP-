@@ -35,5 +35,16 @@
         "username": "MWael",
         "password": "ss",
         "email": "ss"
+    },
+    {
+        "fname": "Fares",
+        "lname": "Edres",
+        "address": "Mohandessin",
+        "department": "OpenSource",
+        "gender": "male",
+        "skills": "php, mysql, j2se, postgresql",
+        "username": "FaresOSAD",
+        "password": "12345678",
+        "email": "FaresOSAD@gmail.com"
     }
 ]

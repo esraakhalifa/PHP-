@@ -1,13 +1,19 @@
 <?php
 
 require_once "./../validation/registrationValidation.php";
+require_once "./../handlers/saveImageHandler.php";
 require_once "./../handlers/addUserHandler.php";
+require_once('./../includes/utils.php');
+
+
 
 // Validate Post Data
 
 $formDataIssues = ValidatePostData($_POST);
 $formErrors = $formDataIssues["errors"];
 $currently_valid_data = $formDataIssues["valid_data"];
+$image_upload_status = SaveImage();
+
 
 if (!empty($formErrors)) {
 
@@ -22,12 +28,23 @@ if (!empty($formErrors)) {
     if (!empty($currently_valid_data)) {
         $queryString .= "&currently_valid_data={$currently_valid_data_json}";
     }
-
+    if (isset($image_upload_status)) {
+        if($image_upload_status)
+        {
+            $queryString .= "&status=success";
+        }
+        else $queryString .= "&status=fail";
+        
+    }
+    else $queryString .= "&status=error";
+    
     // Set the header
-    header("Location: registration.php?{$queryString}");
+    header("Location:registration.php?{$queryString}");
     exit;
 }
 else if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "Form submitted!";
+    print_r($_POST);
     if (!isset($_POST['username']) || !isset($_POST['password'])) {
         die("Username or Password is missing!");
     }

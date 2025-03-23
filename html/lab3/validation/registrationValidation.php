@@ -16,7 +16,7 @@ function ValidatePostData($postData){
             
         } else if (!empty($value)){
             if($key === "email")
-            // /^[a-z0-9_]{8}$/
+            
         {
 
             if(! preg_match('/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', $value)){

@@ -2,6 +2,7 @@
 
 function FindUser($username, $password) {
 
+// Retrieve file contents as a JSON string from file path
 $usersJson = file_get_contents("./../users.json");
 $usersArray = json_decode($usersJson, true);
 
