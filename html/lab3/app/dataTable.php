@@ -1,32 +1,18 @@
 <?php
-require_once "./../handlers/tableHandler.php";
+require_once "./../pdo/Db_Operations.php"; 
+require_once("./../includes/utils.php");
 
-$jsonFile = "./../users.json"; // Ensure this file exists
-if (!file_exists($jsonFile)) {
-    die("<p style='color: red;'>Error: JSON file not found.</p>");
+$tableName = "users"; 
+$usersData = PdoShowData($tableName); 
+
+if (empty($usersData)) {
+    die("<p style='color: red;'>No data found in the database.</p>");
 }
 
-$jsonData = json_decode(file_get_contents($jsonFile), true);
-if ($jsonData === null) {
-    die("<p style='color: red;'>Error: Failed to parse JSON.</p>");
-}
+$allowedFields = ["id", "name", "email", "username"]; 
 
-$header = ['First Name', 'Last Name', 'Address', 'Department', 'Gender', 'Skills'];
+$header = array_intersect(array_keys($usersData[0]), $allowedFields);
 
-// Prepare table data
-$tableData = [];
-foreach ($jsonData as $key => $user) {
-    if (is_array($user) && is_numeric($key)) {
-        $tableData[] = [
-            'fname'      => $user['fname'] ?? 'N/A',
-            'lname'      => $user['lname'] ?? 'N/A',
-            'address'    => $user['address'] ?? 'N/A',
-            'department' => $user['department'] ?? 'N/A',
-            'gender'     => $user['gender'] ?? 'N/A',
-            'skills'     => $user['skills'] ?? 'N/A', 
-        ];
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,7 +46,7 @@ foreach ($jsonData as $key => $user) {
             border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #007bff;
+            background-color: #e97cbc;
             color: white;
             font-size: 16px;
             text-align: center;
@@ -72,18 +58,67 @@ foreach ($jsonData as $key => $user) {
         tr:hover {
             background-color: #f1f1f1;
         }
-        .highlight {
-            font-weight: bold;
-            color: #007bff;
+        .edit-btn, .delete-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 2px;
+        }
+        .edit-btn {
+            background-color: #f28f31;
+            color: white;
+        }
+        .edit-btn:hover {
+            background-color: #f35822;
+        }
+        .delete-btn {
+            background-color: #cf5976;
+            color: white;
+        }
+        .delete-btn:hover {
+            background-color: #ef5f47;
         }
     </style>
+    <script>
+        function editUser(userId) {
+            window.location.href = 'editUser.php?id=' + userId;
+
+        }
+        function deleteUser(userId) {
+            if (confirm("Are you sure you want to delete this user?")) {
+                window.location.href = 'deleteUser.php?id=' + userId;
+            }
+        }
+    </script>
 </head>
 <body>
 
 <div class="container">
     <h2>Users Information</h2>
     <table>
-        <?php RenderTable($header, $tableData); ?>
+        <thead>
+            <tr>
+                <?php foreach ($header as $col): ?>
+                    <th><?= ucfirst($col) ?></th>
+                <?php endforeach; ?>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($usersData as $user): ?>
+                <tr>
+                    <?php foreach ($header as $col): ?>
+                        <td><?= htmlspecialchars($user[$col]) ?></td>
+                    <?php endforeach; ?>
+                    <td>
+                        <button class='edit-btn' onclick='editUser(<?= $user["id"] ?>)'>Edit</button>
+                        <button class='delete-btn' onclick='deleteUser(<?= $user["id"] ?>)'>Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 </div>
 

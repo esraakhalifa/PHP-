@@ -1,3 +1,26 @@
+<?php
+require_once "./../pdo/Db_Operations.php"; 
+require_once("./../includes/utils.php");
+require_once("./../handlers/saveImageHandler.php");
+
+// Handle Form Submission
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $data = [
+//         "fname" => $_POST['fname'],
+//         "lname" => $_POST['lname'],
+//         "address" => $_POST['address'],
+//         "department" => $_POST['department'],
+//         "gender" => $_POST['gender'],
+//         "skills" => $_POST['skills'],
+//         "username" => $_POST['username'],
+//         "email" => $_POST['email']
+//     ];
+
+//     PdoInsert("users", $data,);
+// }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,13 +79,13 @@
         }
 
         .submit-btn {
-            background-color: #1877f2;
+            background-color: #42b72a;
             color: white;
             border: none;
         }
 
         .submit-btn:hover {
-            background-color: lightblue;
+            background-color: #36a420;
         }
 
         .reset-btn {
@@ -119,21 +142,6 @@
                 <div class="error"><?= $errors["address"] ?? '' ?></div>
             </div>
 
-            <!-- Country -->
-            <div class="mb-3">
-                <label for="country" class="form-label">Country</label>
-                <select class="form-select" id="country" name="country">
-                    <option value="">Select Country</option>
-                    <?php
-                    $countries = ["USA", "UK", "Egypt"];
-                    foreach ($countries as $country) {
-                        $selected = (isset($currently_valid_data["country"]) && $currently_valid_data["country"] === $country) ? "selected" : "";
-                        echo "<option value=\"$country\" $selected>$country</option>";
-                    }
-                    ?>
-                </select>
-                <div class="error"><?= $errors["country"] ?? '' ?></div>
-            </div>
 
             <!-- Gender -->
             <div class="mb-3">

@@ -4,6 +4,7 @@ require_once "./../validation/registrationValidation.php";
 require_once "./../handlers/saveImageHandler.php";
 require_once "./../handlers/addUserHandler.php";
 require_once('./../includes/utils.php');
+require_once "./../pdo/Db_Operations.php"; 
 
 
 
@@ -43,8 +44,8 @@ if (!empty($formErrors)) {
     exit;
 }
 else if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "Form submitted!";
-    print_r($_POST);
+    // echo "Form submitted!";
+    // print_r($_POST);
     if (!isset($_POST['username']) || !isset($_POST['password'])) {
         die("Username or Password is missing!");
     }
@@ -65,40 +66,61 @@ else if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Set the variables for the confirmation page from POST data
 
-    $title = ($_POST['gender'] ?? '') === 'female' ? 'Miss' : 'Mr';
-    $fname = $_POST['fname'] ?? 'N/A';
-    $lname = $_POST['lname'] ?? 'N/A';
-    $address = $_POST['address'] ?? 'N/A';
-    $department = $_POST['department'] ?? 'N/A';
-    $gender=$_POST['gender'];
-    $username= $_POST['username'] ??'N/A';
-    $password= $_POST['password'] ??'N/A';
-    $email = $_POST['email'] ??'N/A';
+    // $title = ($_POST['gender'] ?? '') === 'female' ? 'Miss' : 'Mr';
+    // $fname = $_POST['fname'] ?? 'N/A';
+    // $lname = $_POST['lname'] ?? 'N/A';
+    // $address = $_POST['address'] ?? 'N/A';
+    // $department = $_POST['department'] ?? 'N/A';
+    // $gender=$_POST['gender'];
+    // $username= $_POST['username'] ??'N/A';
+    // $password= $_POST['password'] ??'N/A';
+    // $email = $_POST['email'] ??'N/A';
 
-    // Create JSON object for the data
-    $userData = [
+    // // Create JSON object for the data
+    // $userData = [
 
-        "fname" => $fname,
-        "lname" => $lname,
-        "address" => $address,
-        "department" => $department,
-        "gender" => $gender,
-        "skills" => $selectedSkills,
-        "username" =>$username,
-        "password"=> $password,
-        "email"=> $email,
-    ];
+    //     "fname" => $fname,
+    //     "lname" => $lname,
+    //     "address" => $address,
+    //     "department" => $department,
+    //     "gender" => $gender,
+    //     "skills" => $selectedSkills,
+    //     "username" =>$username,
+    //     "password"=> $password,
+    //     "email"=> $email,
+    // ];
     
-    $fileName = "./../users.json";
+    // $fileName = "./../users.json";
 
-    // Add the data to the json file
+    // // Add the data to the json file
 
-    if(AddUserToFile($fileName, $userData))
-    {
+    // if(AddUserToFile($fileName, $userData))
+    // {
 
-        // Set up the saved flag for the registration confirmation page
-        $saved=true;
-    }
+    //     // Set up the saved flag for the registration confirmation page
+    //     $saved=true;
+    // }
+// Define variables to avoid "Undefined Variable" warnings
+    $fname = $_POST['fname'] ?? "N/A";
+    $lname = $_POST['lname'] ?? "N/A";
+    $address = $_POST['address'] ?? "N/A";
+    $department = $_POST['department'] ?? "N/A";
+    $selectedSkills = !empty($_POST['skills']) ? implode(", ", $_POST['skills']) : "No skills selected.";
+
+    $data = [
+        "fname" => $_POST['fname'] ?? "",
+        "lname" => $_POST['lname'] ?? "",
+        "address" => $_POST['address'] ?? "",
+        "department" => $_POST['department'] ?? "",
+        "gender" => $_POST['gender'] ?? "",
+        "skills" => $selectedSkills,  // Fix array-to-string conversion
+        "username" => $_POST['username'] ?? "",
+        "email" => $_POST['email'] ?? "",
+        "password" => password_hash($_POST['password'], PASSWORD_DEFAULT)
+    ];
+
+    $saved = PdoInsert("users", $data);
+
     
 }
 

@@ -11,9 +11,9 @@
     
     
             if (empty($image_name) || empty($image_tmp) || !in_array(strtolower($ext), $valid_extensions)) {
-                // header('location:saveImageHandler.php?status=error');
+                
                 return null;
-                // exit();
+                
             }
     
             $image_name = explode("/", $image_tmp);
@@ -39,19 +39,6 @@
 ?>
 
 
-<!-- HTML & Styling -->
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Image</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
-   
-</body>
-</html> -->
 
 
 

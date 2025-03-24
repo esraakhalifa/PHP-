@@ -46,5 +46,38 @@
         "username": "FaresOSAD",
         "password": "12345678",
         "email": "FaresOSAD@gmail.com"
+    },
+    {
+        "fname": "Esraa",
+        "lname": "MM",
+        "address": "nnnnnn",
+        "department": "OpenSource",
+        "gender": "male",
+        "skills": "php",
+        "username": "ekhalifa",
+        "password": "12345678",
+        "email": "ehh@gmail.com"
+    },
+    {
+        "fname": "Esraa",
+        "lname": "ggggg",
+        "address": "hhhhhh",
+        "department": "OpenSource",
+        "gender": "female",
+        "skills": "php",
+        "username": "ekhalifa",
+        "password": "12345678",
+        "email": "esraakhalifa5@gmail.com"
+    },
+    {
+        "fname": "John",
+        "lname": "Doe",
+        "address": "sesame street",
+        "department": "OpenSource",
+        "gender": "male",
+        "skills": "php",
+        "username": "Nounyyyyy",
+        "password": "password",
+        "email": "fathallah@gmail.com"
     }
 ]

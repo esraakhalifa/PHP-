@@ -31,4 +31,3 @@ function AddUserToFile($filename, $newUserData)
 
 
 ?>
-
